@@ -33,15 +33,19 @@ jobs:
           curl --fail --location --retry 3 \
             "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz" \
             --output export_templates.tpz
-          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
-          unzip -q export_templates.tpz -d export_template_unpack
-          mv export_template_unpack/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}/"
+          mkdir -p .ci_web_templates
+          unzip -j -q export_templates.tpz \
+            templates/web_nothreads_debug.zip \
+            templates/web_nothreads_release.zip \
+            -d .ci_web_templates
 
       - name: Exportar Sistema Caído para navegador
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p public
+          sed -i 's|custom_template/debug=""|custom_template/debug="res://.ci_web_templates/web_nothreads_debug.zip"|' export_presets.cfg
+          sed -i 's|custom_template/release=""|custom_template/release="res://.ci_web_templates/web_nothreads_release.zip"|' export_presets.cfg
           GODOT_BIN="$(find godot -type f -name 'Godot_*' | head -n 1)"
           chmod +x "$GODOT_BIN"
           "$GODOT_BIN" --headless --path "$GITHUB_WORKSPACE" --export-release Web public/index.html
