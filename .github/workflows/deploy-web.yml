@@ -34,7 +34,8 @@ jobs:
             "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz" \
             --output export_templates.tpz
           mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
-          unzip -q export_templates.tpz -d "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
+          unzip -q export_templates.tpz -d export_template_unpack
+          mv export_template_unpack/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}/"
 
       - name: Exportar Sistema Caído para navegador
         shell: bash
