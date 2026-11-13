@@ -1,0 +1,63 @@
+name: Publicar demo web
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v4
+
+      - name: Instalar Godot y plantillas Web oficiales
+        shell: bash
+        run: |
+          set -euo pipefail
+          GODOT_VERSION=4.7.2-stable
+          curl --fail --location --retry 3 \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip" \
+            --output godot.zip
+          unzip -q godot.zip -d godot
+          curl --fail --location --retry 3 \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz" \
+            --output export_templates.tpz
+          mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
+          unzip -q export_templates.tpz -d "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
+
+      - name: Exportar Sistema Caído para navegador
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public
+          GODOT_BIN="$(find godot -type f -name 'Godot_*' | head -n 1)"
+          chmod +x "$GODOT_BIN"
+          "$GODOT_BIN" --headless --path "$GITHUB_WORKSPACE" --export-release Web public/index.html
+          touch public/.nojekyll
+
+      - name: Subir demo a GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publicar demo
+        id: deployment
+        uses: actions/deploy-pages@v4
