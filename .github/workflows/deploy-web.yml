@@ -36,7 +36,6 @@ jobs:
           mkdir -p "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}"
           unzip -q export_templates.tpz -d export_template_unpack
           mv export_template_unpack/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}/"
-          mv export_template_unpack/version.txt "$HOME/.local/share/godot/export_templates/${GODOT_VERSION}/"
 
       - name: Exportar Sistema Caído para navegador
         shell: bash
