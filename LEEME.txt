@@ -1,0 +1,107 @@
+SISTEMA CAIDO - prueba 2.5D para Godot 4
+
+1. Abre Godot 4.3 o mas nuevo.
+2. Pulsa Importar y elige project.godot de esta carpeta.
+3. Espera a que importe el modelo y presiona F5.
+
+Controles
+A D / flechas   moverte
+Shift           dash
+Espacio / W     saltar
+C / S           agacharte
+V               rodar (tambien con la espada en mano)
+J / clic        desenvainar y atacar; pulsa de nuevo durante el golpe para encadenar 3
+K               estocada
+G               guardar la espada
+H               recibir un golpe (prueba)
+X / R           morir / revivir (prueba)
+
+Puedes correr, saltar o hacer dash mientras atacas.
+La espada se guarda sola despues de unos segundos sin atacar.
+
+--- VERSION 2D DEL NINJA ---
+Solo el ninja se ve en 2D (sprite plano). Mapa, robots y guardian siguen en 3D.
+El modelo 3D y sus animaciones se renderizan en un SubViewport y se muestran como sprite (ninja_sprite.gd).
+Mejoras: contorno de tinta, sombreado por bandas, pixeles definidos, giro tipo sprite,
+sombra en el suelo, estela en el dash, aplastado al caer / estirado al saltar, destello al recibir golpe (H).
+Ajustes al inicio de ninja_sprite.gd: SPRITE_RES (pixelado), LEVELS (bandas), OUTLINE_PX (contorno).
+
+--- BRAZOS 2D (arte propio) ---
+ninja_2d.glb  = el mismo ninja sin la malla de los brazos (el original ninja.glb sigue ahi).
+arms/*.png    = manga, antebrazo vendado y guante recortados de tu arte.
+Los brazos son sprites que siguen los huesos del modelo, asi que se mueven con todas las animaciones.
+Constantes de brazos al inicio de ninja_sprite.gd (ARM_*). Si quieres volver al modelo original,
+cambia MODEL_PATH en main.gd a "res://ninja.glb".
+
+--- VERSION 2D (titere de papel con tu ilustracion) ---
+El ninja ya NO usa el modelo 3D: son piezas recortadas de tu arte (res://puppet/*.png) que siguen
+las animaciones guardadas (res://puppet/ninja_anim.json). Script: ninja_puppet.gd.
+Se quitaron los robots y el guardian. Mapa girado 90 grados para verse de frente.
+Ajustes al inicio de main.gd: MAP_SCALE, MAP_FLOOR_Y (si el ninja flota/se hunde), CAM_DIST, CAM_H.
+Si el mapa se ve por detras, cambia el -90.0 de rotation por 90.0 en _build_world (y MAP_FRONT_X por -0.22).
+
+--- VERSION ACTUAL ---
+Ninja 2D (sprite del modelo con contorno + brazos recortados, ninja_sprite.gd), robots y centinela como antes,
+mapa girado para verse de frente. Ajustes de escenario al inicio de main.gd (MAP_*, CAM_*).
+
+--- LOS 7 ATAQUES ---
+J (o clic)  1 Ataque horizontal -> 2 Corte vertical -> 4 Giro de 360 (se encadenan pulsando J de nuevo)
+K           3 Estocada hacia adelante
+L           5 Ataque pesado con ambas manos (preparacion corta y golpe fuerte)
+U           6 Pose de preparacion y ejecucion (se agacha y se lanza con estela)
+I           7 Ataque especial con energia morada (carga y lanza una onda larga)
+V rodar (tambien con la espada). Espacio dos veces: doble salto con voltereta.
+
+--- ESPADA 2D / POSE DE BATALLA ---
+La espada ahora es un sprite 2D (res://sword2d/*.png) que siempre se ve plano (antes desaparecia cuando la hoja quedaba de canto).
+Con la espada en mano el ninja toma pose de batalla: espada hacia adelante y abajo, agarre a dos manos, cuerpo agachado y respirando.
+Ataque especial (I): carga con aura de llamas moradas y lanza un corte morado con fuego en el piso.
+
+--- ESTETICA ANIME ---
+El ninja usa paleta anime (sombras indigo, acentos naranja-rojizo), luz de contorno cian (izq) y magenta (der),
+reflejo en el piso mojado. Ajustes en el shader de ninja_sprite.gd (rim_a, rim_b, refl_alpha, levels).
+Escenario: estandartes carmesi grandes, haces de luz azules, bruma rosada.
+
+--- TEXTURA DEL NINJA ---
+ninja_art.png: textura nueva del ninja, proyectada desde tu ilustracion sobre el modelo (se aplica en ninja_sprite.gd, _restyle_body).
+Se quitaron los bloques naranjas del shader.
+
+
+--- CENTINELA 2D + HUD (nuevo) ---
+El Centinela ya NO es el modelo 3D: es un sprite 2D por poses (res://centinela/p1..p8.png), recortadas de su hoja de referencia.
+Script: centinela.gd. Ataques de la hoja: combo (preparacion > corte horizontal > corte fuerte > remate), estocada, golpe de escudo y bloqueo.
+Telegrafia cada ataque con un brillo naranja. Bloquea tus golpes de frente y contraataca con el escudo. Con poca vida ataca mas rapido.
+Ajustes al inicio de centinela.gd (HEIGHT_M, WALK_SPEED, KEEP_DIST, ATTACKS = pose/duracion/dano/alcance de cada paso).
+Root ahora tiene vida (ROOT_MAX_HP en main.gd), recibe dano y empuje del Centinela, y revive solo a los 2.5 s (o con R).
+Energia: 3 orbes (se regeneran). El ataque especial (I) gasta 1.
+HUD en hud.gd. Los 3 robots de cajas estan apagados (SPAWN_ROBOTS := false en main.gd).
+Al abrir el proyecto, espera a que Godot importe las imagenes nuevas (centinela/ y ui/) antes de pulsar F5.
+
+
+--- ANIMACION 2D DIBUJADA (nuevo) ---
+Centinela: ya no es una imagen que cambia de pose. La malla se deforma en tiempo real:
+  respiracion, balanceo, faldon ondeando, pasos alternados al caminar, y en cada ataque anticipacion (se echa atras y tiembla),
+  golpe con estiramiento (smear) y recuperacion. Cruce de 1-2 cuadros entre poses, estela azul en las embestidas,
+  reaccion al recibir golpe (tambalea) y caida al morir (cae hacia atras y se desvanece).
+Ninja y Centinela comparten estilo: se redibujan "a cuadros" (ANIM_FPS), linea de tinta que tiembla, rayado en sombras y grano de pincel.
+Ajustes: ANIM_FPS (12 = mas dibujado a mano, 24 = fluido) en ninja_sprite.gd y centinela.gd.
+  BOIL / GRAIN / HATCH en ninja_sprite.gd (0 = apagar el efecto). boil / grain / hatch en el shader de centinela.gd.
+
+
+--- ESCENARIO HIBRIDO 3D + 2D, PARRY Y JEFE (nuevo) ---
+FONDO: la ciudad pintada de tu captura (bg/city.png, sin HUD ni personajes) va muy atras como plano 2D, encuadrada igual que la camara,
+  con neones que laten, fuegos que parpadean y niebla en movimiento. El piso y el mapa 3D quedan delante.
+  El mapa 3D se recorta en altura (MAP_CLIP_H en main.gd, 7 m) para que se vea la ciudad detras. Pon 999 para ver todo el mapa 3D.
+  Se quitaron las barras naranjas y los parches naranjas de la textura del mapa (MAP_FIX_ORANGE).
+NINJA: ahora se dibuja a 640 px (antes 264) con linea de tinta mas gruesa: nitido, no borroso.
+CENTINELA - efectos por ataque: carga con particulas, corte horizontal con aro, corte fuerte con media luna y onda en el piso,
+  remate con doble onda, estocada con rayo de energia, golpe de escudo con onda y chispas. La estocada es PELIGROSA (brilla en rojo con "!"):
+  no se puede bloquear ni parrar, hay que esquivarla con dash o voltereta.
+JEFE: al llegar a 0 de vida cae de rodillas, queda jadeando soltando energia y se desploma. NO reaparece. (B = levantarlo, solo para pruebas.)
+PARRY (F o clic derecho): al pulsar se abre una ventana corta (0.18 s) para devolver el ataque: sin dano, el Centinela se tambalea,
+  pierde postura y algo de vida, y tu ganas energia. Despues de la ventana, mantener F bloquea, pero sube tu POSTURA; si se llena, se rompe la guardia.
+  Limites anti-abuso: la ventana no se puede reabrir antes de 0.6 s, machacar F sube tu postura, cada parry seguido achica la ventana,
+  y el Centinela tiene ataques que no se pueden parar.
+POSTURA del Centinela: parrys y golpes la llenan; al llegar a 100 queda aturdido 2.8 s (recibe 75% mas de dano) pero NO hay golpe mortal,
+  y despues no se le puede aturdir otra vez durante 7 s.
+BALANCE: Centinela 60 de vida. El especial (I) ya no se recarga solo: se carga golpeando al Centinela y con parrys. Alcance del especial 9 -> 6.5 m.

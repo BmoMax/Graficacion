@@ -1,0 +1,363 @@
+{
+ "parts": {
+  "head": {
+   "png": "head.png",
+   "pa": [
+    116,
+    294
+   ],
+   "pb": [
+    116,
+    54
+   ],
+   "size": [
+    242,
+    305
+   ],
+   "a": "Neck",
+   "b": "Tie1",
+   "xs": 0.85
+  },
+  "cape": {
+   "png": "cape.png",
+   "pa": [
+    278,
+    216
+   ],
+   "pb": [
+    278,
+    61
+   ],
+   "size": [
+    566,
+    220
+   ],
+   "a": "Chest",
+   "b": "Neck",
+   "xs": 0.62
+  },
+  "torso": {
+   "png": "torso.png",
+   "pa": [
+    149,
+    252
+   ],
+   "pb": [
+    149,
+    16
+   ],
+   "size": [
+    302,
+    307
+   ],
+   "a": "Spine",
+   "b": "Neck",
+   "xs": 0.62
+  },
+  "pelvis": {
+   "png": "pelvis.png",
+   "pa": [
+    171,
+    137
+   ],
+   "pb": [
+    171,
+    -13
+   ],
+   "size": [
+    366,
+    187
+   ],
+   "a": "Hips",
+   "b": "Spine",
+   "xs": 0.62
+  },
+  "drape": {
+   "png": "drape.png",
+   "pa": [
+    69,
+    130
+   ],
+   "pb": [
+    69,
+    421
+   ],
+   "size": [
+    148,
+    603
+   ],
+   "a": "Front1",
+   "b": "Front3",
+   "xs": 0.7
+  },
+  "thigh": {
+   "png": "thigh.png",
+   "pa": [
+    116,
+    21
+   ],
+   "pb": [
+    116,
+    366
+   ],
+   "size": [
+    232,
+    412
+   ],
+   "xs": 0.8
+  },
+  "shin": {
+   "png": "shin.png",
+   "pa": [
+    146,
+    16
+   ],
+   "pb": [
+    146,
+    316
+   ],
+   "size": [
+    280,
+    442
+   ],
+   "xs": 0.85
+  },
+  "upper": {
+   "png": "arm_upper.png",
+   "pa": [
+    62,
+    4
+   ],
+   "pb": [
+    62,
+    91
+   ],
+   "size": [
+    124,
+    106
+   ],
+   "xs": 0.95
+  },
+  "fore": {
+   "png": "arm_fore.png",
+   "pa": [
+    50,
+    3
+   ],
+   "pb": [
+    50,
+    160
+   ],
+   "size": [
+    100,
+    161
+   ],
+   "xs": 0.95
+  },
+  "hand": {
+   "png": "arm_hand.png",
+   "pa": [
+    55,
+    8
+   ],
+   "pb": [
+    55,
+    154
+   ],
+   "size": [
+    110,
+    156
+   ],
+   "xs": 0.95
+  },
+  "sword": {
+   "png": "sword.png",
+   "pa": [
+    36.0,
+    0
+   ],
+   "pb": [
+    36.0,
+    467
+   ],
+   "size": [
+    72,
+    830
+   ],
+   "a": "Sword",
+   "b": "FX_BladeGlow",
+   "xs": 1.0
+  },
+  "scabbard": {
+   "png": "scabbard.png",
+   "pa": [
+    36.0,
+    0
+   ],
+   "pb": [
+    36.0,
+    467
+   ],
+   "size": [
+    72,
+    830
+   ],
+   "a": "Scabbard",
+   "b": "ScabbardTip",
+   "xs": 1.0
+  }
+ },
+ "inst": [
+  {
+   "name": "sword_back",
+   "part": "sword",
+   "a": "Sword",
+   "b": "FX_BladeGlow",
+   "layer": 0,
+   "side": "",
+   "dyn": "sword"
+  },
+  {
+   "name": "scabbard",
+   "part": "scabbard",
+   "a": "Scabbard",
+   "b": "ScabbardTip",
+   "layer": 1,
+   "side": ""
+  },
+  {
+   "name": "fa_fore",
+   "part": "fore",
+   "a": "LowerArm.L",
+   "b": "Hand.L",
+   "layer": 2,
+   "side": "far"
+  },
+  {
+   "name": "fa_hand",
+   "part": "hand",
+   "a": "Hand.L",
+   "b": "HandTip.L",
+   "layer": 3,
+   "side": "far"
+  },
+  {
+   "name": "fa_upper",
+   "part": "upper",
+   "a": "UpperArm.L",
+   "b": "LowerArm.L",
+   "layer": 4,
+   "side": "far"
+  },
+  {
+   "name": "fl_thigh",
+   "part": "thigh",
+   "a": "UpperLeg.L",
+   "b": "LowerLeg.L",
+   "layer": 5,
+   "side": "far"
+  },
+  {
+   "name": "fl_shin",
+   "part": "shin",
+   "a": "LowerLeg.L",
+   "b": "Foot.L",
+   "layer": 6,
+   "side": "far"
+  },
+  {
+   "name": "torso",
+   "part": "torso",
+   "a": "Spine",
+   "b": "Neck",
+   "layer": 7,
+   "side": ""
+  },
+  {
+   "name": "cape",
+   "part": "cape",
+   "a": "Chest",
+   "b": "Neck",
+   "layer": 8,
+   "side": ""
+  },
+  {
+   "name": "pelvis",
+   "part": "pelvis",
+   "a": "Hips",
+   "b": "Spine",
+   "layer": 9,
+   "side": ""
+  },
+  {
+   "name": "nl_thigh",
+   "part": "thigh",
+   "a": "UpperLeg.R",
+   "b": "LowerLeg.R",
+   "layer": 10,
+   "side": "near"
+  },
+  {
+   "name": "nl_shin",
+   "part": "shin",
+   "a": "LowerLeg.R",
+   "b": "Foot.R",
+   "layer": 11,
+   "side": "near"
+  },
+  {
+   "name": "drape",
+   "part": "drape",
+   "a": "Front1",
+   "b": "Front3",
+   "layer": 12,
+   "side": ""
+  },
+  {
+   "name": "head",
+   "part": "head",
+   "a": "Neck",
+   "b": "Tie1",
+   "layer": 13,
+   "side": ""
+  },
+  {
+   "name": "na_fore",
+   "part": "fore",
+   "a": "LowerArm.R",
+   "b": "Hand.R",
+   "layer": 14,
+   "side": "near"
+  },
+  {
+   "name": "na_hand",
+   "part": "hand",
+   "a": "Hand.R",
+   "b": "HandTip.R",
+   "layer": 15,
+   "side": "near"
+  },
+  {
+   "name": "na_upper",
+   "part": "upper",
+   "a": "UpperArm.R",
+   "b": "LowerArm.R",
+   "layer": 16,
+   "side": "near"
+  },
+  {
+   "name": "sword_front",
+   "part": "sword",
+   "a": "Sword",
+   "b": "FX_BladeGlow",
+   "layer": 17,
+   "side": "",
+   "dyn": "sword"
+  }
+ ],
+ "art_px": 0.00138,
+ "sheath_off": [
+  0.14,
+  -0.03
+ ]
+}

@@ -1,0 +1,10 @@
+# Archivos generados localmente por Godot
+.godot/
+.import/
+*.import
+
+# Registros y archivos temporales
+*.tmp
+*.log
+godot_run.txt
+.DS_Store
